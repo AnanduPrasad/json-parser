@@ -1,46 +1,60 @@
 # JSON Parser
 
-A fast, zero-dependency JSON viewer that runs entirely in the browser.
+A fast, zero-dependency JSON viewer that runs directly in the browser.
 
-## Features
+This app lets you paste or type JSON, validate it instantly, and explore it as a collapsible tree with rich visual feedback.
 
-- **Syntax-highlighted tree view** — keys, strings, numbers, booleans, and nulls each styled distinctly
-- **Live validation** — parses automatically 600 ms after you stop typing; error bar shows the exact parse message
-- **Collapsible nodes** — click the arrow on any object or array to collapse it; inline preview shows `…}`
-- **Expand / Collapse All** — one-click flatten or fold the entire tree
-- **Search** — filters and highlights matching keys or values, auto-expanding ancestor nodes
-- **Path breadcrumb** — hover any node to see its full dot-notation path (`$.user.metadata.preferences`)
-- **Copy values** — hover a node to reveal a copy button; copies the value (or pretty-printed JSON for objects/arrays)
-- **Stats bar** — total keys, max depth, object count, array count, and input size
-- **Line numbers** — in both the input editor and the tree; toggleable via the `# Lines` button
-- **Resizable split pane** — drag the divider between input and tree panels
-- **Sample data** — click `⚡ Sample` to load a representative JSON object
+## 🌐 Live Demo
 
-## Usage
+Try it here: https://ananduprasad.github.io/json-parser/
 
-Open `index.html` directly in any modern browser — no server or build step required.
+## ✨ Highlights
 
+- Syntax-highlighted tree view for keys, strings, numbers, booleans, and null values
+- Automatic live validation with a parse error message when input is invalid
+- Collapsible object and array nodes for easy navigation
+- Expand and collapse controls for the full tree
+- Search and highlight support for matching keys or values
+- Full path previews for nodes using dot notation
+- One-click copy actions for entire JSON or individual values
+- Live stats such as total keys, depth, object count, array count, and input size
+- Line numbers for both the editor and parsed tree
+- Resizable split-pane layout for editing and inspection side by side
+- Sample data button for instant testing
+
+## 🚀 Usage
+
+Open `index.html` in any modern browser. No server setup or build step is required.
+
+You can also use the live demo link above to try the app immediately.
+
+## 📁 Project Structure
+
+```text
+json-parser/
+├── index.html   # App layout and UI markup
+├── styles.css   # Visual styling and layout rules
+├── app.js       # Parsing, rendering, and interaction logic
+└── README.md    # Project documentation
 ```
-Json Parser/
-├── index.html   # markup and layout
-├── styles.css   # all visual styles and CSS variables
-├── app.js       # parsing, tree rendering, and UI logic
-└── README.md
-```
 
-## Keyboard / interaction quick-reference
+## ⌨️ Quick Reference
 
-| Action | How |
+| Action | How to do it |
 |---|---|
-| Parse | Click **▶ Parse** or wait 600 ms after typing |
-| Load sample | Click **⚡ Sample** |
-| Clear | Click **✕ Clear** |
+| Parse JSON | Click the **▶ Parse** button or wait about 600 ms after typing |
+| Load sample data | Click **⚡ Sample** |
+| Clear input | Click **✕ Clear** |
 | Toggle line numbers | Click **# Lines** |
-| Collapse a node | Click the **▸** arrow on any object / array |
+| Collapse a node | Click the **▸** arrow on an object or array |
 | Expand a node | Click the **▾** arrow |
-| Expand all | Click **⊞ Expand All** |
-| Collapse all | Click **⊟ Collapse All** |
-| Copy entire JSON | Click **⎘ Copy JSON** |
-| Copy a single value | Hover a leaf node → click **copy** |
-| Search | Type in the search box (top-right of tree panel) |
-| Resize panels | Drag the vertical divider |
+| Expand all nodes | Click **⊞ Expand All** |
+| Collapse all nodes | Click **⊟ Collapse All** |
+| Copy the full JSON | Click **⎘ Copy JSON** |
+| Copy a single value | Hover a node and click the copy action |
+| Search the tree | Type in the search box in the tree panel |
+| Resize the panels | Drag the vertical divider |
+
+## 💡 Notes
+
+The app is intentionally lightweight and dependency-free, making it easy to run locally or share as a simple static page.
