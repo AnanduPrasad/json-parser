@@ -314,6 +314,38 @@ function toast(msg) {
   setTimeout(() => t.classList.remove('show'), 1800);
 }
 
+function clearSearchUI() {
+  const status = document.getElementById('searchStatus');
+  const results = document.getElementById('searchResults');
+  if (status) status.textContent = '';
+  if (results) {
+    results.innerHTML = '';
+    results.classList.remove('show');
+  }
+}
+
+function focusSearchMatch(line) {
+  const treeScroll = document.getElementById('treeScroll');
+  const target = line && line.closest('.node');
+  if (!target || !treeScroll) return;
+
+  let current = target;
+  while (current) {
+    current.classList.remove('collapsed');
+    const toggle = current.querySelector(':scope > .node-line > .toggle-btn');
+    if (toggle) toggle.textContent = '▾';
+    current = current.parentElement && current.parentElement.closest('.node');
+  }
+
+  document.querySelectorAll('.node-line.search-active').forEach(el => el.classList.remove('search-active'));
+  line.classList.add('search-active');
+
+  const rect = line.getBoundingClientRect();
+  const containerRect = treeScroll.getBoundingClientRect();
+  const top = rect.top - containerRect.top + treeScroll.scrollTop - 40;
+  treeScroll.scrollTo({ top, behavior: 'smooth' });
+}
+
 // ── Clear / Sample ────────────────────────────────────────────────────────────
 
 function clearAll() {
@@ -323,6 +355,7 @@ function clearAll() {
   document.getElementById('errorBar').className = 'error-bar';
   document.getElementById('searchInput').value = '';
   parsedData = null;
+  clearSearchUI();
   updateLeftLineNums();
   showEmpty();
 }
@@ -370,14 +403,38 @@ function loadSample() {
 
 function onSearch() {
   const q = document.getElementById('searchInput').value.trim().toLowerCase();
-  if (!parsedData) return;
-  if (!q) { renderTree(parsedData); return; }
+  const status = document.getElementById('searchStatus');
+  const results = document.getElementById('searchResults');
+
+  if (!parsedData) {
+    clearSearchUI();
+    return;
+  }
+
+  if (!q) {
+    renderTree(parsedData);
+    clearSearchUI();
+    return;
+  }
 
   renderTree(parsedData);
 
+  const matches = [];
   document.querySelectorAll('.node-line').forEach(line => {
     if (!line.textContent.toLowerCase().includes(q)) return;
+
     line.classList.add('highlight-path');
+    line.classList.add('search-match');
+    line.style.cursor = 'pointer';
+    line.onclick = e => {
+      e.stopPropagation();
+      focusSearchMatch(line);
+    };
+
+    const path = line.dataset.path || '$';
+    const preview = line.textContent.replace(/\s+/g, ' ').trim().slice(0, 80);
+    matches.push({ line, path, preview });
+
     let p = line.closest('.node');
     while (p) {
       p.classList.remove('collapsed');
@@ -386,6 +443,33 @@ function onSearch() {
       p = p.parentElement && p.parentElement.closest('.node');
     }
   });
+
+  const countText = matches.length === 1 ? '1 match' : `${matches.length} matches`;
+  if (status) status.textContent = countText;
+
+  if (results) {
+    if (!matches.length) {
+      results.innerHTML = '<div class="search-result-empty">No matches</div>';
+      results.classList.add('show');
+      return;
+    }
+
+    results.innerHTML = matches.map((match, index) => `
+      <button class="search-result-item" data-index="${index}">
+        <span class="search-result-path">${match.path}</span>
+        <span class="search-result-preview">${match.preview}</span>
+      </button>
+    `).join('');
+
+    results.querySelectorAll('.search-result-item').forEach(button => {
+      button.addEventListener('click', () => {
+        const idx = Number(button.dataset.index);
+        if (matches[idx]) focusSearchMatch(matches[idx].line);
+      });
+    });
+
+    results.classList.add('show');
+  }
 }
 
 // ── Resize handle ─────────────────────────────────────────────────────────────
