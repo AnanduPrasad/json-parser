@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON Parser</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">{ }</div>
+    JSON Parser
+  </div>
+  <div class="header-actions">
+    <button class="btn active" id="lnumToggleBtn" onclick="toggleLineNums()" title="Toggle line numbers"># Lines</button>
+    <button class="btn" onclick="loadSample()">⚡ Sample</button>
+    <button class="btn danger" onclick="clearAll()">✕ Clear</button>
+    <button class="btn primary" onclick="parseJSON()">▶ Parse</button>
+  </div>
+</header>
+
+<div class="main" id="main">
+  <div class="panel-left" id="panelLeft">
+    <div class="panel-header">
+      <div><span class="status-dot" id="statusDot"></span>Input</div>
+      <div id="charCount" style="font-size:11px;color:var(--text2)">0 chars</div>
+    </div>
+    <div class="editor-wrap">
+      <div class="line-nums-left" id="lineNumsLeft"><span>1</span></div>
+      <textarea
+        id="input"
+        placeholder='Paste your JSON here...&#10;&#10;{&#10;  "example": "value"&#10;}'
+        spellcheck="false"
+        oninput="onInput()"
+        onscroll="syncLeftScroll()"
+      ></textarea>
+    </div>
+    <div class="error-bar" id="errorBar"></div>
+  </div>
+
+  <div class="resize-handle" id="resizeHandle"></div>
+
+  <div class="panel-right">
+    <div class="tree-toolbar">
+      <button class="btn" onclick="expandAll()">⊞ Expand All</button>
+      <button class="btn" onclick="collapseAll()">⊟ Collapse All</button>
+      <button class="btn" onclick="copyTree()">⎘ Copy JSON</button>
+      <div class="search-box">
+        <span class="icon">⌕</span>
+        <input type="text" id="searchInput" placeholder="Search keys/values…" oninput="onSearch()">
+      </div>
+    </div>
+    <div class="stats-bar" id="statsBar" style="display:none">
+      <span>Keys: <b id="statKeys">0</b></span>
+      <span>Depth: <b id="statDepth">0</b></span>
+      <span>Arrays: <b id="statArrays">0</b></span>
+      <span>Objects: <b id="statObjects">0</b></span>
+      <span>Size: <b id="statSize">0</b></span>
+    </div>
+    <div class="path-breadcrumb" id="pathBar">Hover a node to see its path</div>
+    <div class="tree-area">
+      <div class="tree-scroll" id="treeScroll">
+        <div class="empty-state">
+          <div class="empty-icon">{ }</div>
+          <p>Paste JSON on the left and click Parse</p>
+          <small>Supports objects, arrays, nested structures</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
