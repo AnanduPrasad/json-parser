@@ -1,0 +1,46 @@
+# JSON Parser
+
+A fast, zero-dependency JSON viewer that runs entirely in the browser.
+
+## Features
+
+- **Syntax-highlighted tree view** — keys, strings, numbers, booleans, and nulls each styled distinctly
+- **Live validation** — parses automatically 600 ms after you stop typing; error bar shows the exact parse message
+- **Collapsible nodes** — click the arrow on any object or array to collapse it; inline preview shows `…}`
+- **Expand / Collapse All** — one-click flatten or fold the entire tree
+- **Search** — filters and highlights matching keys or values, auto-expanding ancestor nodes
+- **Path breadcrumb** — hover any node to see its full dot-notation path (`$.user.metadata.preferences`)
+- **Copy values** — hover a node to reveal a copy button; copies the value (or pretty-printed JSON for objects/arrays)
+- **Stats bar** — total keys, max depth, object count, array count, and input size
+- **Line numbers** — in both the input editor and the tree; toggleable via the `# Lines` button
+- **Resizable split pane** — drag the divider between input and tree panels
+- **Sample data** — click `⚡ Sample` to load a representative JSON object
+
+## Usage
+
+Open `index.html` directly in any modern browser — no server or build step required.
+
+```
+Json Parser/
+├── index.html   # markup and layout
+├── styles.css   # all visual styles and CSS variables
+├── app.js       # parsing, tree rendering, and UI logic
+└── README.md
+```
+
+## Keyboard / interaction quick-reference
+
+| Action | How |
+|---|---|
+| Parse | Click **▶ Parse** or wait 600 ms after typing |
+| Load sample | Click **⚡ Sample** |
+| Clear | Click **✕ Clear** |
+| Toggle line numbers | Click **# Lines** |
+| Collapse a node | Click the **▸** arrow on any object / array |
+| Expand a node | Click the **▾** arrow |
+| Expand all | Click **⊞ Expand All** |
+| Collapse all | Click **⊟ Collapse All** |
+| Copy entire JSON | Click **⎘ Copy JSON** |
+| Copy a single value | Hover a leaf node → click **copy** |
+| Search | Type in the search box (top-right of tree panel) |
+| Resize panels | Drag the vertical divider |
